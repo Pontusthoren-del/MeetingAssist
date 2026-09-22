@@ -1,0 +1,21 @@
+# .NET
+backend/**/bin/
+backend/**/obj/
+*.user
+appsettings.Development.json
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+
+# Secrets - extra säkerhetsnät
+*.pfx
+.env
+.env.local
+
+# OS/IDE
+.vs/
+.vscode/
+.DS_Store
