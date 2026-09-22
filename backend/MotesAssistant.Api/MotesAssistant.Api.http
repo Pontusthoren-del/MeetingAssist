@@ -1,0 +1,6 @@
+@MotesAssistant.Api_HostAddress = http://localhost:5130
+
+GET {{MotesAssistant.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
