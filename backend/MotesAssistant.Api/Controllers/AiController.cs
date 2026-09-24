@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MotesAssistant.Api.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using MotesAssistant.Api.DTO;
 using MotesAssistant.Api.Services;
 
 namespace MotesAssistant.Api
@@ -11,20 +10,14 @@ namespace MotesAssistant.Api
     {
         private readonly IAiService _aiService;
 
+        private const string SystemPrompt =
+            "Du är en hjälpsam mötesassistent. Svara alltid på svenska. " +
+            "Dina svar är förslag som användaren kan redigera. Fatta inga beslut åt användaren.";
+
         public AiController(IAiService aiService)
         {
             _aiService = aiService;
         }
 
-        [HttpPost("summarize")]
-        public async Task<IActionResult> Summarize([FromBody] SummarizeRequest request)
-        {
-            if (string.IsNullOrWhiteSpace(request.MeetingNotes))
-            {
-                return BadRequest("MeetingNotes får inte vara tomt");
-            }
-            var result = await _aiService.SummarizeAsync(request.MeetingNotes);
-            return Ok(new { summary = result });
-        }
     }
 }

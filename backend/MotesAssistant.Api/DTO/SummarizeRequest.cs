@@ -1,4 +1,4 @@
-﻿namespace MotesAssistant.Api.Models
+﻿namespace MotesAssistant.Api.DTO
 {
     public class SummarizeRequest
     {
