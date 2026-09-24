@@ -69,5 +69,36 @@ namespace MotesAssistant.Api
 
             return Ok(new {agenda = answer });
         }
+
+        [HttpPost("invitation")]
+        public async Task<IActionResult> Invitation([FromBody] InvitationRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.MeetingName))
+            {
+                return BadRequest("MeetingName får inte vara tomt.");
+            }
+            var systemPrompt = """
+            Du är en mötesassistent som skriver utkast till mötesinbjudningar på svenska.
+            Svara ENDAST med inbjudan, ingen inledning eller förklaring runt den.
+            Använd ingen markdown, alltså inga stjärnor eller rubriktecken.
+            Första raden ska vara "Ämne: " följt av en kort ämnesrad.
+            Tonen ska vara professionell men vänlig, och texten kort och tydlig.
+            Ta med mötets namn, tid, plats och syfte.
+            Hitta inte på detaljer som inte finns i underlaget, till exempel länkar, telefonnummer eller en agenda.
+            Avsluta med "Vänliga hälsningar" och "[Ditt namn]" på raden under, så att användaren kan fylla i det själv.
+            """;
+
+            var userPrompt = $"""
+            Skriv en mötesinbjudan.
+            Mötets namn: {request.MeetingName}
+            Tid: {request.Time}
+            Plats: {request.Location}
+            Syfte: {request.Purpose}
+            """;
+
+            var answer = await _aiService.SendPromptAsync(systemPrompt, userPrompt);
+
+            return Ok(answer);
+        }
     }
 }
