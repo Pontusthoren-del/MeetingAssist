@@ -28,7 +28,7 @@ public class GeminiAiService : IAiService
         };
 
         // Skickar prompten till Gemini
-        var response = await client.Models.GenerateContentAsync("gemini-3.5-flash-lite", userPrompt, config);
+        var response = await client.Models.GenerateContentAsync("gemini-3.5-flash", userPrompt, config);
 
         // ? och ?? gör att programmet inte kraschar om svaret är tomt
         var text = response.Candidates?[0].Content?.Parts?[0].Text ?? string.Empty;
