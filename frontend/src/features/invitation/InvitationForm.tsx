@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { generateAgenda } from "./agendaApi";
-import styles from "./AgendaForm.module.css";
+import { generateInvitation } from "./invitationApi";
+import styles from "./InvitationForm.module.css";
 
-function AgendaForm() {
-    const [title, setTitle] = useState("");
+function InvitationForm() {
+    const [meetingName, setMeetingName] = useState("");
+    const [time, setTime] = useState("");
+    const [location, setLocation] = useState("");
     const [purpose, setPurpose] = useState("");
-    const [participants, setParticipants] = useState("");
-    const [lengthMinutes, setLengthMinutes] = useState(30);
     const [result, setResult] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -15,13 +15,13 @@ function AgendaForm() {
         setLoading(true);
         setError("");
         try {
-            const agenda = await generateAgenda({
-                title,
+            const invitation = await generateInvitation({
+                meetingName,
+                time,
+                location,
                 purpose,
-                participants,
-                lengthMinutes,
             });
-            setResult(agenda);
+            setResult(invitation);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Något gick fel");
         } finally {
@@ -31,12 +31,12 @@ function AgendaForm() {
 
     return (
         <div className={styles.container}>
-            <h2>Skapa agenda</h2>
+            <h2>Skapa inbjudan</h2>
 
             <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Mötets titel"
+                value={meetingName}
+                onChange={(e) => setMeetingName(e.target.value)}
+                placeholder="Mötets namn"
             />
             <input
                 value={purpose}
@@ -44,26 +44,25 @@ function AgendaForm() {
                 placeholder="Syfte med mötet"
             />
             <input
-                value={participants}
-                onChange={(e) => setParticipants(e.target.value)}
-                placeholder="Deltagare, t.ex Anna,Erik etc."
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                placeholder="Tid, t.ex. 15 okt kl 10:00"
             />
             <input
-                type="number"
-                min={5}
-                value={lengthMinutes}
-                onChange={(e) => setLengthMinutes(Number(e.target.value))}
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Mötets plats"
             />
 
             <button
                 onClick={handleSubmit}
-                disabled={loading || !purpose.trim()}
+                disabled={loading || !meetingName.trim()}
             >
-                {loading ? "Skapar agenda..." : "Skapa agenda"}
+                {loading ? "Skapar inbjudan..." : "Skapa inbjudan"}
             </button>
 
             {error && <p className={styles.error}>{error}</p>}
-            
+
             {result && (
                 <textarea
                     value={result}
@@ -74,4 +73,4 @@ function AgendaForm() {
     );
 }
 
-export default AgendaForm;
+export default InvitationForm;
