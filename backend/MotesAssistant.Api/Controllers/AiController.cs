@@ -15,7 +15,7 @@ namespace MotesAssistant.Api
         }
 
         [HttpPost("summarize")]
-        public async Task<ActionResult> Summarize([FromBody] SummarizeRequest request)
+        public async Task<IActionResult> Summarize([FromBody] SummarizeRequest request)
         { 
             if (string.IsNullOrWhiteSpace(request.MeetingNotes))
             {
@@ -23,12 +23,13 @@ namespace MotesAssistant.Api
             }
 
             var systemPrompt = """
-            Du är en mötesassistent som sammanfattar mötesanteckningar på svenska.
-            Var kortfattad och saklig.
-            Lyft fram beslut, ansvariga personer och deadlines om de finns.
-            Hitta inte på något som inte står i anteckningarna.
-            Sammanfattningen är ett förslag som användaren själv kan redigera.
-            """;
+                Du är en mötesassistent som sammanfattar mötesanteckningar på svenska.
+                Svara ENDAST med sammanfattningen, ingen inledning eller avslutning.
+                Använd ingen markdown, alltså inga stjärnor eller rubriktecken. Använd "- " för punkter.
+                Var kortfattad och saklig.
+                Lyft fram beslut, ansvariga personer och deadlines om de finns.
+                Hitta inte på något som inte står i anteckningarna.
+                """;
 
             var userPrompt = $"""
                 Sammanfatta följande mötesanteckningar: {request.MeetingNotes} 
@@ -74,9 +75,18 @@ namespace MotesAssistant.Api
             Längd: {request.LengthMinutes} minuter
             """;
 
-            var answer = await _aiService.SendPromptAsync(systemPrompt, userPrompt);
+            try
+            {
+                var answer = await _aiService.SendPromptAsync(systemPrompt, userPrompt);
 
-            return Ok(new {agenda = answer });
+                return Ok(new { agenda = answer });
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"AI-fel: {ex.Message}");
+                return StatusCode(503, "AI-tjänsten är inte tillgänglig just nu. Försök igen senare.");
+            }
         }
 
         [HttpPost("invitation")]
@@ -105,9 +115,18 @@ namespace MotesAssistant.Api
             Syfte: {request.Purpose}
             """;
 
-            var answer = await _aiService.SendPromptAsync(systemPrompt, userPrompt);
+            try
+            {
+                var answer = await _aiService.SendPromptAsync(systemPrompt, userPrompt);
 
-            return Ok(answer);
+                return Ok(new { invite = answer });
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"AI-fel: {ex.Message}");
+                return StatusCode(503, "AI-tjänsten är inte tillgänglig just nu. Försök igen senare.");
+            }
         }
     }
 }
