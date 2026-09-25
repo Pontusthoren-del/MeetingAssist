@@ -34,9 +34,18 @@ namespace MotesAssistant.Api
                 Sammanfatta följande mötesanteckningar: {request.MeetingNotes} 
                 """;
 
-            var answer = await _aiService.SendPromptAsync(systemPrompt, userPrompt);
+            try
+            {
+                var answer = await _aiService.SendPromptAsync(systemPrompt, userPrompt);
 
-            return Ok(answer);
+                return Ok(new {summary = answer });
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"AI-fel: {ex.Message}");
+                return StatusCode(503, "AI-tjänsten är inte tillgänglig just nu. Försök igen senare.");
+            }
         }
 
         [HttpPost("agenda")]
