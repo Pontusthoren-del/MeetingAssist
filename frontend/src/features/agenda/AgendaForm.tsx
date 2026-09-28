@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { generateAgenda } from "./agendaApi";
-import styles from "./AgendaForm.module.css";
+import styles from "../../shared/styles/Form.module.css";
 
 function AgendaForm() {
     const [title, setTitle] = useState("");
@@ -63,12 +63,17 @@ function AgendaForm() {
             </button>
 
             {error && <p className={styles.error}>{error}</p>}
-            
+
             {result && (
-                <textarea
-                    value={result}
-                    onChange={(e) => setResult(e.target.value)}
-                />
+                <div className={styles.result}>
+                    <span className={styles.resultLabel}>
+                        AI-förslag · redigera fritt
+                    </span>
+                    <textarea
+                        value={result}
+                        onChange={(e) => setResult(e.target.value)}
+                    />
+                </div>
             )}
         </div>
     );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { summarize } from "./summarizeApi";
-import styles from "./SummarizeForm.module.css";
+import styles from "../../shared/styles/Form.module.css";
 
 function SummarizeForm() {
     const [notes, setNotes] = useState("");
@@ -37,10 +37,15 @@ function SummarizeForm() {
             {error && <p className={styles.error}>{error}</p>}
 
             {result && (
-                <textarea
-                    value={result}
-                    onChange={(e) => setResult(e.target.value)}
-                />
+                <div className={styles.result}>
+                    <span className={styles.resultLabel}>
+                        AI-förslag · redigera fritt
+                    </span>
+                    <textarea
+                        value={result}
+                        onChange={(e) => setResult(e.target.value)}
+                    />
+                </div>
             )}
         </div>
     );

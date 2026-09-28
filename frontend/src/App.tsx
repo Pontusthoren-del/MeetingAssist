@@ -8,6 +8,7 @@ function App() {
     return (
         <div className={styles.app}>
             <h1>AI Mötesassistent</h1>
+            <p className={styles.tagline}>Förslag, inte beslut.</p>
 
             <nav className={styles.tabs}>
                 <NavLink

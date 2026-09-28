@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { generateInvitation } from "./invitationApi";
-import styles from "./InvitationForm.module.css";
+import styles from "../../shared/styles/Form.module.css";
 
 function InvitationForm() {
     const [meetingName, setMeetingName] = useState("");
@@ -64,10 +64,15 @@ function InvitationForm() {
             {error && <p className={styles.error}>{error}</p>}
 
             {result && (
-                <textarea
-                    value={result}
-                    onChange={(e) => setResult(e.target.value)}
-                />
+                <div className={styles.result}>
+                    <span className={styles.resultLabel}>
+                        AI-förslag · redigera fritt
+                    </span>
+                    <textarea
+                        value={result}
+                        onChange={(e) => setResult(e.target.value)}
+                    />
+                </div>
             )}
         </div>
     );

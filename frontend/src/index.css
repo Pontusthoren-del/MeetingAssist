@@ -1,0 +1,25 @@
+:root {
+    --bg: #eef2f5;
+    --surface: #ffffff;
+    --ink: #16202a;
+    --muted: #5b6b7a;
+    --border: #d6dee5;
+    --accent: #1f4e5f;
+    --accent-soft: #d7e6ea;
+    font-family: "Manrope", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #048df6 0%, #bee6f8 50%, #e6e4ef 100%);
+    background-attachment: fixed;
+}
+
+h1,
+h2 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+}

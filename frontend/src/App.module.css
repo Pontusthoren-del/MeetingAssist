@@ -1,0 +1,44 @@
+.app {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.app h1 {
+    font-size: 2.75rem;
+    margin: 0;
+}
+
+.tagline {
+    color: var(--muted);
+    margin: 0.25rem 0 2rem;
+    color: black;
+}
+
+.tabs {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    margin-bottom: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+}
+
+.tabs a {
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tabs a:hover {
+    color: var(--ink);
+}
+
+.tabs a.active {
+    background: var(--ink);
+    color: #fff;
+}
