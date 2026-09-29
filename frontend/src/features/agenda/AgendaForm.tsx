@@ -11,7 +11,8 @@ function AgendaForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    async function handleSubmit() {
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
         setLoading(true);
         setError("");
         try {
@@ -30,7 +31,7 @@ function AgendaForm() {
     }
 
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleSubmit}>
             <h2>Skapa agenda</h2>
 
             <input
@@ -55,10 +56,7 @@ function AgendaForm() {
                 onChange={(e) => setLengthMinutes(Number(e.target.value))}
             />
 
-            <button
-                onClick={handleSubmit}
-                disabled={loading || !purpose.trim()}
-            >
+            <button type="submit" disabled={loading || !purpose.trim()}>
                 {loading ? "Skapar agenda..." : "Skapa agenda"}
             </button>
 
@@ -75,7 +73,7 @@ function AgendaForm() {
                     />
                 </div>
             )}
-        </div>
+        </form>
     );
 }
 

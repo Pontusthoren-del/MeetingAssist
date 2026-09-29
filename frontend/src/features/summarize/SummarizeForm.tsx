@@ -8,7 +8,8 @@ function SummarizeForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    async function handleSubmit() {
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
         setLoading(true);
         setError("");
 
@@ -23,7 +24,7 @@ function SummarizeForm() {
     }
 
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleSubmit}>
             <h2>Sammanfatta möte</h2>
 
             <textarea
@@ -31,7 +32,7 @@ function SummarizeForm() {
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Klistra in mötesanteckningar här..."
             />
-            <button onClick={handleSubmit} disabled={loading || !notes.trim()}>
+            <button type="submit" disabled={loading || !notes.trim()}>
                 {loading ? "Sammanfattar..." : "Sammanfatta"}
             </button>
             {error && <p className={styles.error}>{error}</p>}
@@ -47,7 +48,7 @@ function SummarizeForm() {
                     />
                 </div>
             )}
-        </div>
+        </form>
     );
 }
 

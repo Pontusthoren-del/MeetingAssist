@@ -11,7 +11,8 @@ function InvitationForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    async function handleSubmit() {
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
         setLoading(true);
         setError("");
         try {
@@ -30,7 +31,7 @@ function InvitationForm() {
     }
 
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleSubmit}>
             <h2>Skapa inbjudan</h2>
 
             <input
@@ -54,10 +55,7 @@ function InvitationForm() {
                 placeholder="Mötets plats"
             />
 
-            <button
-                onClick={handleSubmit}
-                disabled={loading || !meetingName.trim()}
-            >
+            <button type="submit" disabled={loading || !meetingName.trim()}>
                 {loading ? "Skapar inbjudan..." : "Skapa inbjudan"}
             </button>
 
@@ -74,7 +72,7 @@ function InvitationForm() {
                     />
                 </div>
             )}
-        </div>
+        </form>
     );
 }
 
